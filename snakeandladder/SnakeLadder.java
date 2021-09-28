@@ -35,7 +35,7 @@ public class SnakeLadder {
 				System.out.println("playerOne Winner");
 			else if(playerTwo == WINNING_POSITION)
 				System.out.println("playerTwo Winner");
-			 	count++;
+			count++;
 		}
 		System.out.println("playerOne rolls " + countForPlayerOne + " times");
 		System.out.println("playerTwo rolls " + countForPlayerTwo + " times");
