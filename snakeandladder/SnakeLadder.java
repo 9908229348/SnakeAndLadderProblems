@@ -1,57 +1,76 @@
 package snakeandladder;
 
 public class SnakeLadder {
-	int forOptions() {
+	public static void main(String[] args) {
+		int countForPlayerOne = 0,countForPlayerTwo = 0;
+		final int DECIDE_PLAYER = 0,WINNING_POSITION = 100,STARTING_POSITION=0;
+		int playerOne = 0,playerTwo = 0,count = 0;
+		while(playerOne < 100 && playerTwo < 100)
+		{
+			if(count %2 == DECIDE_PLAYER)
+			{
+				System.out.println("PlayerOne is Playing");
+				int playValueOne = playingGame();
+				playerOne = playerOne + playValueOne;
+				if(playerOne < STARTING_POSITION)
+					playerOne = 0;
+				if(playerOne > WINNING_POSITION)
+					playerOne = playerOne - playValueOne;
+				System.out.println("playerOne position is :" + playerOne);
+				countForPlayerOne++;
+			}
+			else
+			{
+				System.out.println("PlayerTwo is Playing");
+				int playValueTwo = playingGame();
+				playerTwo = playerTwo + playValueTwo;
+				if(playerTwo < STARTING_POSITION)
+					playerTwo = 0;
+				if(playerTwo > WINNING_POSITION)
+					playerTwo = playerTwo - playValueTwo;
+				System.out.println("PlayerTwo Position is :" + playerTwo);
+				countForPlayerTwo++;
+			}
+			if(playerOne == WINNING_POSITION)
+				System.out.println("playerOne Winner");
+			else if(playerTwo == WINNING_POSITION)
+				System.out.println("playerTwo Winner");
+			 	count++;
+		}
+		System.out.println("playerOne rolls " + countForPlayerOne + " times");
+		System.out.println("playerTwo rolls " + countForPlayerTwo + " times");
+	}
+	static int playingGame() {
+		int diceNumber = rollingDie();
+		final int SNAKE = 1;
+		final int LADDER = 2;
+		int playValue = 0; 
+		switch(forOptions()) 
+		{
+			case SNAKE :
+				System.out.println("It is a Snake");
+				playValue = playValue - diceNumber;
+				break;
+			case LADDER :
+				System.out.println("It is a Ladder");
+				playValue = playValue + diceNumber;
+				int playAgain = playingGame();
+				playValue = playAgain + playValue;
+				break;
+			default :
+					System.out.println("No Play");	
+		}
+		return playValue;
+	}
+	static int forOptions() {
 		int options = (int)Math.floor(Math.random() * 3);
-		System.out.println("If you get option 0 it is noPlay,1 it is ladder,2 it is snake ");
-		System.out.println("You got option :" + options);
+		System.out.println("The option you get :" +options);
 		return options;
 	}
-		int play() {
-		int urPresentStep = 0;
-		int noOfTimesdieRolled = 0;
-		//int ladder = 1;
-		//int snake = 2;
-		while(urPresentStep < 100) {
-			noOfTimesdieRolled++;
-			SnakeLadder playing = new SnakeLadder();
-			int dieRoll = (int)Math.floor(Math.random() * 6 + 1);
-			System.out.println("The Number on dice: " + dieRoll);
-			switch(playing.forOptions())
-			{
-			case 1:
-				urPresentStep += dieRoll;
-				if(urPresentStep > 100)
-					urPresentStep -= dieRoll;
-				System.out.println("You are on step:" + urPresentStep);
-				int extraRoll = (int)Math.floor(Math.random() * 6 + 1);
-				System.out.println("The Extra Roll for getting Ladder and you get Number :" + extraRoll);
-				urPresentStep += extraRoll;
-				if(urPresentStep > 100)
-					urPresentStep -= extraRoll;
-				System.out.println("You are on step:" + urPresentStep);
-				break;
-			case 2:
-				urPresentStep -= dieRoll;
-				if(urPresentStep < 0)
-					urPresentStep = 0;
-				System.out.println("You are on step:" + urPresentStep);
-				break;
-			default:
-				System.out.println("You are on Step :" + urPresentStep);
-			}
-		}
-			return noOfTimesdieRolled;
-		}
-		public static void main(String[] args) {
-			SnakeLadder game = new SnakeLadder();
-		    int playerOne = game.play();
-		    int playerTwo = game.play();
-		    System.out.println("No.of Times Dice rolled by playerOne to Reach 100: " + playerOne);
-		    System.out.println("No.of Times Dice rolled by playerTwo to Reach 100: " + playerTwo);
-		    if(playerOne < playerTwo)
-		    	System.out.println("playerOne is winner");
-		    else
-		    	System.out.println("playerTwo is winner");
-		}
+	static int rollingDie()
+	{
+		int dieValue = (int)Math.floor(Math.random() * 6 +1);
+		System.out.println("The number on dice is :" + dieValue);
+		return dieValue;
+	}
 }
